@@ -18,14 +18,13 @@ class AuthService
         ]);
 
         if ($validator->fails()) {
-            return [
+            return response()->json([
                 'success' => false,
                 'errors' => $validator->errors(),
-                'status' => 403
-            ];
+                'status' => 422
+            ], 422);
         }
 
-        // Determine user type based on email domain
         $emailDomain = substr($data['email'], strpos($data['email'], '@') + 1);
         $userType = ($emailDomain === 'goers.com') ? 'Admin' : 'Client';
 
@@ -83,7 +82,7 @@ class AuthService
         ];
     }
 
-    public function me()
+    public function user()
     {
         return [
             'success' => true,

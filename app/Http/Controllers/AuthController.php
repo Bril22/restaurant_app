@@ -14,35 +14,30 @@ class AuthController extends Controller
         $this->authService = $authService;
     }
 
-    // Register a new user.
     public function register(Request $request)
     {
         $result = $this->authService->register($request->all());
         return response()->json($result, $result['status']);
     }
 
-    // Login user and create token.
     public function login(Request $request)
     {
         $result = $this->authService->login($request->only('email', 'password'));
         return response()->json($result, $result['status']);
     }
 
-    // Get the authenticated User.
-    public function me()
+    public function profile()
     {
-        $result = $this->authService->me();
+        $result = $this->authService->user();
         return response()->json($result, $result['status']);
     }
 
-    // Logout the user (Invalidate the token).
     public function logout()
     {
         $result = $this->authService->logout();
         return response()->json($result, $result['status']);
     }
      
-    // Refresh a token
     public function refresh()
     {
         $result = $this->authService->refresh();
